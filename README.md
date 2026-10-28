@@ -29,16 +29,11 @@ Diseñado para operar 100% offline en cabina o estaciones de monitoreo, con visu
 ```text
 detector_sanchez_polo/
 ├── iniciar.command             # 🚀 Lanzador automático para macOS (servidor + Chrome)
-├── configurar_horarios.sh      # Automatización de horarios de encendido/apagado (pmset + launchd)
-├── desactivar_horarios.sh      # Desactivación de horarios programados
 ├── requirements.txt            # Dependencias de Python
 ├── README.md                   # Documentación del proyecto
 ├── LEEME.txt                   # Resumen rápido de operación
 ├── scripts/
-│   ├── simulate_click.py       # Simulación de interacción física para desbloquear audio en navegador
-│   ├── auto_shutdown.sh        # Rutina de verificación y apagado programado
-│   ├── com.sanchezpolo.fatiga.plist        # Servicio LaunchAgent para arranque automático
-│   └── com.sanchezpolo.autoshutdown.plist  # Servicio LaunchDaemon para apagado programado
+│   └── simulate_click.py       # Simulación de interacción física para desbloquear audio en navegador
 ├── src/
 │   ├── __init__.py
 │   └── fatigue_analyzer.py     # Lógica matemática de EAR, MAR, cabeceo y persistencia de eventos

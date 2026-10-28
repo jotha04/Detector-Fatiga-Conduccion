@@ -16,7 +16,6 @@ ESTRUCTURA INCLUIDA:
     * simulate_click.py: Auto-desbloqueador de audio para Google Chrome sin teclado ni ratón.
 - src/:
     * fatigue_analyzer.py: Lógica de análisis de microsueños, cabeceo y bostezos.
-- configurar_horarios.sh: Utilidad para programar encendido y apagado automático del Mac.
 
 COMO INICIAR:
 Simplemente haz doble clic sobre 'iniciar.command'.
