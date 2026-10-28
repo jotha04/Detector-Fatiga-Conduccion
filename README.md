@@ -57,6 +57,10 @@ Parametros ajustables en `web_app/config.yaml`:
 - `FATIGUE_MAR_THRESHOLD`: Umbral de apertura de boca para bostezo (default: 0.80).
 - `FATIGUE_HEAD_PITCH_DOWN_THRESHOLD`: Inclinacion hacia abajo para detectar cabeceo (default: 32 grados).
 
+## Licencia
+
+Distribuido bajo la licencia MIT. Consulta el archivo `LICENSE` para mas detalles.
+
 ---
 
 <div id="english"></div>
@@ -113,3 +117,7 @@ Thresholds can be adjusted via the web dashboard or inside `web_app/config.yaml`
 - `FATIGUE_EYE_CLOSED_CONSEC_FRAMES`: Consecutive frames with closed eyes required to trigger the alarm (default: 50 frames, ~2.5s at 20 FPS).
 - `FATIGUE_MAR_THRESHOLD`: Mouth openness threshold for yawning (default: 0.80).
 - `FATIGUE_HEAD_PITCH_DOWN_THRESHOLD`: Downward tilt angle for nodding detection (default: 32 degrees).
+
+## License
+
+Distributed under the MIT License. See the `LICENSE` file for details.
