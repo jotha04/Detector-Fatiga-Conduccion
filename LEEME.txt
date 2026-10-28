@@ -1,22 +1,16 @@
-==========================================================
-        SANCHEZ POLO - DETECTOR DE SIGNOS DE FATIGA
-==========================================================
+DETECTOR DE SIGNOS DE FATIGA
 
-Este paquete contiene exclusivamente la versión Web App moderna
-desarrollada para la cabina y exhibición.
-
-ESTRUCTURA INCLUIDA:
-- iniciar.command: Script para iniciar todo con un solo doble clic.
+ESTRUCTURA:
+- iniciar.command: Script para iniciar con un doble clic en macOS.
 - web_app/:
-    * server.py: Servidor FastAPI de streaming ultra-rápido en tiempo real.
-    * better_detector.py: Detector facial MediaPipe (478 puntos, compatible con gafas).
-    * config.yaml: Configuración de umbrales y cámara.
-    * static/: Interfaz moderna 100% offline (HTML, CSS, JS, Chart.js local, fuentes y audio).
+    * server.py: Servidor FastAPI de streaming y telemetria.
+    * better_detector.py: Detector facial MediaPipe (478 puntos).
+    * config.yaml: Configuracion de umbrales y camara.
+    * static/: Interfaz web offline (HTML, CSS, JS, Chart.js y alarma).
 - scripts/:
-    * simulate_click.py: Auto-desbloqueador de audio para Google Chrome sin teclado ni ratón.
+    * simulate_click.py: Auto-desbloqueador de audio en Chrome.
 - src/:
-    * fatigue_analyzer.py: Lógica de análisis de microsueños, cabeceo y bostezos.
+    * fatigue_analyzer.py: Logica de analisis de microsueños, cabeceo y bostezos.
 
-COMO INICIAR:
-Simplemente haz doble clic sobre 'iniciar.command'.
-Abrirá automáticamente el servidor y Google Chrome maximizado a pantalla completa.
+INICIO:
+Doble clic sobre 'iniciar.command' o ejecutar 'python web_app/server.py'.
