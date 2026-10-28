@@ -1,0 +1,65 @@
+# Configuración para la Detección de Somnolencia
+
+# --- Identificadores ---
+# ID del conductor (debe existir en la base de datos)
+driver_id: "af53f786-61ec-4973-abb7-b427c248bcf6"
+# ID del vehículo (debe existir en la base de datos)
+vehicle_id: "bc0eda7c-d42a-4143-8a58-d57ff95119cf"
+
+# --- Comunicación con el Backend ---
+# Endpoint del backend (STOMP/WebSocket)
+backend_host: "localhost"
+backend_port: 8080
+backend_ws_path: "/ws"
+# Envío de evidencias de imagen (HTTP)
+send_images_on_high: false
+# ORIGINAL envía el frame sin overlays; OVERLAY envía lo que ves en pantalla
+image_variant: "ORIGINAL"
+# Endpoint de subida de imágenes (multipart/form-data)
+image_upload_url: "http://localhost:8080/api/attachments"
+# Tamaño/calidad y cooldown entre envíos (segundos)
+image_max_width: 640
+image_jpeg_quality: 75
+image_cooldown_seconds: 20
+# Intervalo en segundos para enviar datos al backend (cuando hay infracción)
+data_send_interval_seconds: 5
+# Intervalo en segundos para enviar datos cuando no hay infracción (para confirmar que el sistema está activo)
+normal_data_send_interval_seconds: 30
+
+# --- Parámetros de Detección ---
+# FPS asumidos para la cámara para cálculos de tiempo
+fps: 20
+
+# --- Configuración de la Cámara ---
+# Índice de la cámara a utilizar (por ejemplo, 0 para la cámara predeterminada)
+camera_index: 0
+# Ancho del frame para la captura de video (960x540 = 16:9 completo sin recortar rostro)
+frame_width: 960
+display_full_screen: false
+
+# --- Rutas de Archivos ---
+# Ruta al modelo de predictor de puntos faciales
+shape_predictor_path: "models/shape_predictor_68_face_landmarks.dat"
+# Ruta al archivo de sonido de alarma
+alarm_sound_path: "assets/music.wav"
+
+# --- Umbrales de Análisis de Fatiga ---
+# Umbral de Eye Aspect Ratio (EAR) para considerar los ojos como "cerrados"
+FATIGUE_EAR_THRESHOLD: 0.22
+# Umbral de Mouth Aspect Ratio (MAR) para considerar un "bostezo"
+FATIGUE_MAR_THRESHOLD: 0.80
+
+# Contadores de Frames Consecutivos para la Detección de Fatiga (para evitar falsos positivos)
+# Estos valores se basan en el FPS y la duración deseada (por ejemplo, 1 segundo = 20 frames a 20 FPS)
+FATIGUE_EYE_CLOSED_CONSEC_FRAMES: 50 # Ojos cerrados (más frames para evitar pitidos rápidos)
+FATIGUE_HEAD_NOD_CONSEC_FRAMES: 70 # Cabeza hacia abajo
+FATIGUE_YAWN_CONSEC_FRAMES: 18 # Boca abierta ~0.9s a 20 FPS para bostezo sostenido
+
+# Umbrales de Pose de la Cabeza (en grados)
+# Ángulo en grados para considerar que la cabeza está mirando hacia abajo de forma significativa
+FATIGUE_HEAD_PITCH_DOWN_THRESHOLD: 32 # Umbral más alto para evitar falsos positivos por vibración
+IGNORE_YAWN_IF_HEAD_DOWN: true # Nuevo: Ignorar bostezos si la cabeza está agachada (para evitar falsos positivos)
+FATIGUE_HEAD_YAW_THRESHOLD: 25 # Ángulo en grados para considerar giro significativo de cabeza (distracción)
+FATIGUE_HEAD_YAW_CONSEC_FRAMES: 10 # Frames consecutivos con cabeza girada para detectar distracción
+head_nod_require_eyes_closed: true
+head_nod_ignore_if_yawn: true

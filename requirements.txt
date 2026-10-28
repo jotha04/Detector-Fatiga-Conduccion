@@ -1,0 +1,20 @@
+# --- Computer Vision & Facial Landmarks ---
+opencv-python
+mediapipe>=0.10.0
+numpy
+scipy
+imutils
+PyYAML
+
+# --- Web Application & Streaming Server ---
+fastapi>=0.100.0
+uvicorn>=0.22.0
+websockets
+
+# --- Audio & Alerting ---
+pygame
+
+# --- Telemetry & Optional Backend Sync ---
+stomp.py==7.0.0
+websocket-client
+requests

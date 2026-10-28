@@ -1,0 +1,23 @@
+==========================================================
+        SANCHEZ POLO - DETECTOR DE SIGNOS DE FATIGA
+==========================================================
+
+Este paquete contiene exclusivamente la versión Web App moderna
+desarrollada para la cabina y exhibición.
+
+ESTRUCTURA INCLUIDA:
+- iniciar.command: Script para iniciar todo con un solo doble clic.
+- web_app/:
+    * server.py: Servidor FastAPI de streaming ultra-rápido en tiempo real.
+    * better_detector.py: Detector facial MediaPipe (478 puntos, compatible con gafas).
+    * config.yaml: Configuración de umbrales y cámara.
+    * static/: Interfaz moderna 100% offline (HTML, CSS, JS, Chart.js local, fuentes y audio).
+- scripts/:
+    * simulate_click.py: Auto-desbloqueador de audio para Google Chrome sin teclado ni ratón.
+- src/:
+    * fatigue_analyzer.py: Lógica de análisis de microsueños, cabeceo y bostezos.
+- configurar_horarios.sh: Utilidad para programar encendido y apagado automático del Mac.
+
+COMO INICIAR:
+Simplemente haz doble clic sobre 'iniciar.command'.
+Abrirá automáticamente el servidor y Google Chrome maximizado a pantalla completa.

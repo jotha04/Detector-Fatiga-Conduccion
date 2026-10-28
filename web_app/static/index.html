@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanchez Polo | Detector de Signos de Fatiga</title>
+    <link rel="stylesheet" href="/static/style.css?v=5">
+    <script src="/static/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Full Layout -->
+        <div class="main-layout">
+            <!-- Left Side: Dashboard (60%) -->
+            <div class="dashboard-side">
+                <!-- Top Section: Camera Stream spanning full width -->
+                <div class="panel video-panel">
+                    <div class="panel-header">
+                        <div class="title-group">
+                            <span class="status-dot live"></span>
+                            <h2>Vigilancia Conductor en Tiempo Real</h2>
+                            <span class="badge">IA Facial MediaPipe (478 Puntos)</span>
+                        </div>
+                        <div class="tabs">
+                            <button class="tab active">Malla Facial Activa</button>
+                            <button class="tab">Cámara Directa</button>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay badge-forward">MONITOREO ACTIVO</div>
+                        <img id="videoStream" src="/video_feed" alt="Live Camera Feed">
+                    </div>
+                </div>
+
+                <!-- Bottom Section: Row with Chart, Status, and Controls -->
+                <div class="bottom-row">
+                    <!-- Chart Section: Apertura Ocular -->
+                    <div class="panel chart-panel">
+                        <div class="panel-header">
+                            <h2>👁️ APERTURA OCULAR</h2>
+                            <span class="time-label">Pestañeo y Microsueños</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="earChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Primary Status: Estado Conductor -->
+                    <div class="panel status-panel">
+                        <div class="panel-header">
+                            <h2>🎯 ESTADO DEL CONDUCTOR</h2>
+                        </div>
+                        <div class="status-content">
+                            <div class="main-metric">
+                                <h1 id="fatigueStatus">NORMAL</h1>
+                                <p id="fatigueType" class="subtitle">Conducción Segura</p>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="fatigueBar"></div>
+                            </div>
+                            
+                            <!-- Stats Grid: Métricas Humanizadas -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <span class="stat-label">Fluidez</span>
+                                    <span class="stat-value"><span id="val-fps">0.0</span> <small style="font-size:10px;color:var(--text-muted);font-weight:400">FPS</small></span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Apertura Ojos</span>
+                                    <span class="stat-value" id="val-ear">0.00</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Apertura Boca</span>
+                                    <span class="stat-value" id="val-mar">0.00</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Límite Alarma</span>
+                                    <span class="stat-value" id="val-thresh-ear">0.20</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Cabeceo</span>
+                                    <span class="stat-value" id="val-pitch">0°</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Cámara Cabina</span>
+                                    <span class="stat-value highlight"><span class="status-dot live"></span> Activa</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls: Ajustes de Alerta -->
+                    <div class="panel controls-panel">
+                        <div class="panel-header">
+                            <h2>⚙️ AJUSTES DE ALERTA</h2>
+                        </div>
+                        <div class="control-group">
+                            <div class="control-header">
+                                <span>Sensibilidad Cierre Ocular</span>
+                                <span class="val" id="sliderVal">0.20</span>
+                            </div>
+                            <input type="range" min="0.10" max="0.30" step="0.01" value="0.22" id="earSlider" class="slider">
+                            <div class="slider-labels">
+                                <span>Ojos más abiertos</span>
+                                <span>Ojos más cerrados</span>
+                            </div>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <h3>Alarma en Cabina</h3>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked id="audioToggle">
+                                <span class="slider-toggle round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side: Looping Truck Video (40%) -->
+            <div class="video-side">
+                <video src="/static/sanches_left.mov" autoplay loop muted playsinline class="external-video"></video>
+            </div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
