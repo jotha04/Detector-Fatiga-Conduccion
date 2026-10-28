@@ -1,26 +1,26 @@
-# Sistema de Detección de Fatiga y Somnolencia (Cabina & Conductor)
+# Sistema de Detección de Fatiga, Caída de Párpados y Somnolencia para Conductores
 
-Sistema integral de visión por computador y telemetría en tiempo real para la detección temprana de signos de fatiga, somnolencia (caída de párpados / EAR), cabeceo y bostezos en conductores.
+Plataforma inteligente de visión artificial y telemetría biomécanica en tiempo real diseñada para la **detección temprana y no invasiva de fatiga, somnolencia (caída de párpados / microsueños), cabeceo y bostezos en cabinas de transporte**.
 
-Diseñado para operar 100% offline en cabina o estaciones de monitoreo, con visualización Web App interactiva y alertas sonoras instantáneas.
+El sistema opera de forma 100% offline, procesando video localmente mediante redes neuronales de malla facial (**MediaPipe Face Mesh**) e integrando un panel de visualización web interactivo con alertas sonoras inmediatas en cabina.
 
 ---
 
-## 🎯 Características Principales
+## 🎯 ¿Para qué sirve el Sistema?
 
-1. **Detección Facial de Alta Precisión (MediaPipe Mesh):**
-   * Rastreo de 478 puntos faciales tridimensionales.
-   * Tolerante al uso de gafas de montura tradicional y variaciones de iluminación.
-2. **Métricas Biomecánicas Continuas:**
-   * **EAR (Eye Aspect Ratio):** Monitoreo continuo de apertura ocular y detección de microsueños.
-   * **MAR (Mouth Aspect Ratio):** Detección de patrones de bostezo sostenido.
-   * **Pose de Cabeza (Pitch / Yaw):** Detección de cabeceo por sueño o distracciones laterales prolongadas.
-3. **Servidor Web Ultraligero (FastAPI + WebSockets):**
-   * Streaming de video MJPEG de baja latencia.
-   * Transmisión de telemetría por WebSocket al panel gráfico en el navegador.
-4. **Alertas Acústicas y Visuales Autónomas:**
-   * Alarma sonora inmediata en cabina ante eventos críticos.
-   * Panel visual con gráficas dinámicas (Chart.js local) y controles de umbral en tiempo real.
+El cansancio al volante y los microsueños son responsables de un alto porcentaje de siniestros viales en transporte de carga y pasajeros. Este sistema actúa como un copiloto digital de seguridad activa:
+
+1. **Detección Continua de Caída de Párpados (EAR):**
+   * Calcula cuadro a cuadro el índice **EAR (*Eye Aspect Ratio*)** a partir de las coordenadas euclidianas de los párpados.
+   * Si el conductor cierra los ojos o pestañea con lentitud anormal durante más de un umbral temporal configurable (e.g. 2.5 segundos consecutivos), el sistema activa de inmediato la **alarma acústica de cabina**.
+2. **Detección de Bostezos Sostenidos (MAR):**
+   * Mide la apertura vertical y horizontal de los labios mediante el índice **MAR (*Mouth Aspect Ratio*)**, diferenciando entre el habla normal y un bostezo prolongado (>0.9 segundos).
+3. **Análisis de Cabeceo y Distracción (Pose 3D):**
+   * Estima los ángulos de orientación de la cabeza (**Pitch** para inclinación vertical / cabeceo por sueño, y **Yaw** para giros laterales de distracción).
+4. **Tolerancia a Lentes y Condiciones de Cabina:**
+   * Al utilizar la malla densa de 478 puntos de MediaPipe, el modelo mantiene el rastreo de ojos incluso con gafas de montura tradicional y variaciones de iluminación.
+5. **Streaming Web de Baja Latencia y Telemetría:**
+   * Servidor integrado FastAPI + WebSockets que transmite video fluido en tiempo real y actualiza gráficas dinámicas de fatiga en el navegador mediante Chart.js local.
 
 ---
 
@@ -28,50 +28,63 @@ Diseñado para operar 100% offline en cabina o estaciones de monitoreo, con visu
 
 ```text
 detector_sanchez_polo/
-├── iniciar.command             # 🚀 Lanzador automático para macOS (servidor + Chrome)
+├── iniciar.command             # 🚀 Lanzador automático para macOS (inicia servidor y abre Chrome)
 ├── requirements.txt            # Dependencias de Python
-├── README.md                   # Documentación del proyecto
+├── README.md                   # Documentación técnica completa
 ├── LEEME.txt                   # Resumen rápido de operación
 ├── scripts/
-│   └── simulate_click.py       # Simulación de interacción física para desbloquear audio en navegador
+│   └── simulate_click.py       # Desbloqueador automático de audio en el navegador
 ├── src/
 │   ├── __init__.py
-│   └── fatigue_analyzer.py     # Lógica matemática de EAR, MAR, cabeceo y persistencia de eventos
+│   └── fatigue_analyzer.py     # Algoritmos matemáticos de EAR, MAR, cabeceo y persistencia de eventos
 └── web_app/
-    ├── server.py               # Servidor FastAPI y WebSocket
-    ├── better_detector.py      # Detector facial MediaPipe (478 landmarks)
-    ├── config.yaml             # Configuración de umbrales, cámara y backend
-    ├── face_landmarker.task    # Modelo binario de MediaPipe Face Landmarker
-    └── static/                 # Frontend 100% offline (HTML, CSS, JS, Chart.js, audio, fuentes)
+    ├── server.py               # Servidor FastAPI y WebSocket de telemetría y streaming MJPEG
+    ├── better_detector.py      # Detector facial MediaPipe (478 puntos tridimensionales)
+    ├── config.yaml             # Configuración central de umbrales, cámara y alertas
+    ├── face_landmarker.task    # Modelo neuronal MediaPipe Face Landmarker
+    └── static/                 # Panel web 100% offline (HTML5, CSS3, JS, Chart.js, audio WAV, fuentes)
+        ├── chart.js
+        ├── index.html
+        ├── music.wav           # Alarma acústica de advertencia
+        ├── script.js
+        ├── style.css
+        └── sanches_left.mov    # Video demostrativo lateral en loop
 ```
 
 ---
 
-## 🛠️ Instalación y Requisitos
+## 💻 Requisitos del Sistema
 
-### Requisitos Previos
-* **Python 3.10 o 3.11**
-* Cámara web USB o cámara integrada
-* Navegador moderno (Google Chrome recomendado)
+* **Sistemas Operativos:** macOS (Apple Silicon M1/M2/Intel), Windows 10/11 (x64) o Linux.
+* **Hardware:**
+  * Cámara web USB o cámara integrada (apuntando al rostro del conductor).
+  * Altavoces o salida de audio habilitada para la alarma.
+* **Software:**
+  * **Python 3.10 o 3.11**.
+  * Navegador moderno (Google Chrome recomendado para el modo kiosco y audio automático).
 
-### Paso 1: Clonar o Descargar el Repositorio
+---
+
+## 🛠️ Instalación Paso a Paso
+
+### 1. Clonar el Repositorio
 ```bash
 git clone <URL_DEL_REPOSITORIO>
 cd detector_sanchez_polo
 ```
 
-### Paso 2: Crear el Entorno Virtual
+### 2. Configurar el Entorno Virtual
 ```bash
 # macOS / Linux
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Windows
+# Windows (PowerShell)
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\Activate.ps1
 ```
 
-### Paso 3: Instalar Dependencias
+### 3. Instalar Dependencias
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
@@ -79,28 +92,29 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Ejecución del Sistema
+## 🚀 Cómo Correr el Programa
 
-### Opción A (macOS con un solo clic):
-Haz doble clic sobre el archivo `iniciar.command`.  
-*Iniciará el servidor en segundo plano y abrirá Google Chrome maximizado en `http://localhost:8000` con el audio activo.*
+### Opción 1 (macOS - Doble Clic):
+Haz doble clic sobre el archivo:
+```text
+iniciar.command
+```
+*Iniciará automáticamente el servidor en segundo plano, abrirá Google Chrome a pantalla completa en `http://localhost:8000` y desbloqueará el audio de alerta de inmediato.*
 
-### Opción B (Desde la Terminal en macOS / Linux / Windows):
+### Opción 2 (Desde la Terminal en Windows / Linux / macOS):
 ```bash
-# Activar entorno virtual
-source .venv/bin/activate  # o .venv\Scripts\activate en Windows
-
-# Iniciar servidor
+# Con el entorno virtual activado:
 python web_app/server.py
 ```
-Abre tu navegador en: **`http://localhost:8000`**
+Abre tu navegador web en: **`http://localhost:8000`**
 
 ---
 
-## ⚙️ Configuración y Calibración
+## ⚙️ Calibración y Ajuste de Umbrales
 
-Los umbrales se pueden ajustar en caliente desde la interfaz web o editando [`web_app/config.yaml`](file:///web_app/config.yaml):
+Todos los parámetros pueden ajustarse tanto desde los deslizadores interactivos en el panel web como editando [`web_app/config.yaml`](file:///web_app/config.yaml):
 
-* **`FATIGUE_EAR_THRESHOLD`** (por defecto `0.22`): Umbral de apertura de ojos. Si el EAR cae por debajo durante `FATIGUE_EYE_CLOSED_CONSEC_FRAMES`, se dispara la alarma de microsueño.
-* **`FATIGUE_HEAD_PITCH_DOWN_THRESHOLD`** (por defecto `32`): Inclinación de la cabeza hacia abajo (grados).
-* **`FATIGUE_MAR_THRESHOLD`** (por defecto `0.80`): Umbral de apertura bucal para detección de bostezo.
+* **`FATIGUE_EAR_THRESHOLD`** (por defecto `0.22`): Umbral de apertura de ojos. Valores menores a 0.22 indican ojos cerrados.
+* **`FATIGUE_EYE_CLOSED_CONSEC_FRAMES`** (por defecto `50` frames $\approx 2.5$ s a 20 FPS): Tiempo continuo con ojos cerrados requerido para disparar la alarma (evita falsos positivos por parpadeo natural).
+* **`FATIGUE_MAR_THRESHOLD`** (por defecto `0.80`): Umbral de apertura de boca para detectar bostezo sostenido.
+* **`FATIGUE_HEAD_PITCH_DOWN_THRESHOLD`** (por defecto `32` grados): Inclinación hacia abajo para detectar cabeceo por pérdida de consciencia.
